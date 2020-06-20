@@ -80,6 +80,14 @@ app.get("/", forwardAuthenticated, function(req, res) {
   res.render("welcome");
 });
 
+// Dashboard
+app.get('/dashboard', ensureAuthenticated, function(req, res) {
+  res.render('dashboard', {
+    user: req.user
+  });
+});
+
+
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ["profile"] })
