@@ -31,6 +31,11 @@ app.get("/", function(req, res) {
 app.get('/login', (req, res) => res.render('login'));
 
 
+
+// Register Page
+app.get('/register', (req, res) => res.render('register'));
+
+
 let port = process.env.PORT;
 if (port == null || port == "") {
   port = 3000;
