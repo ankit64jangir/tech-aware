@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require("body-parser");
 const flash = require('connect-flash');
@@ -6,7 +7,9 @@ const _ = require('lodash');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
-
+const { ensureAuthenticated, forwardAuthenticated } = require('./config/auth');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const findOrCreate = require('mongoose-findorcreate')
 
 
 const app = express();
@@ -51,7 +54,9 @@ app.use(
   })
 );
 
-
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 
 
@@ -71,15 +76,29 @@ app.use(function(req, res, next) {
 
 const User = require('./models/User');
 
-app.get("/", function(req, res) {
+app.get("/", forwardAuthenticated, function(req, res) {
   res.render("welcome");
 });
 
+
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ["profile"] })
+);
+
+app.get('/auth/google/techaware',
+  passport.authenticate('google', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect Dashboard.
+    res.redirect('/dashboard');
+  });
+
+
+
 // Login Page
-app.get('/login', (req, res) => res.render('login'));
+app.get('/login', forwardAuthenticated, (req, res) => res.render('login'));
 
 // Register Page
-app.get('/register', (req, res) => res.render('register'));
+app.get('/register', forwardAuthenticated, (req, res) => res.render('register'));
 
 // Register
 app.post('/register', (req, res) => {
