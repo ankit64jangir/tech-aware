@@ -75,6 +75,8 @@ app.use(function(req, res, next) {
 
 
 const User = require('./models/User');
+const BlogPost = require('./models/BlogPost');
+
 
 app.get("/", forwardAuthenticated, function(req, res) {
   res.render("welcome");
