@@ -96,6 +96,80 @@ app.get('/dashboard', ensureAuthenticated, function(req, res) {
 });
 
 
+app.get("/blog", function(req, res) {
+  BlogPost.find({}, function(err, posts) {
+    res.render("blog", {
+      posts: posts
+    });
+  });
+});
+
+
+app.get("/welcomeBlog", function(req, res) {
+  BlogPost.find({}, function(err, welcomePosts) {
+    res.render("welcomeBlog", {
+      welcomePosts: welcomePosts
+    });
+  });
+});
+
+app.get("/compose", ensureAuthenticated, function(req, res) {
+  res.render("compose", {
+    user: req.user
+  });
+});
+
+app.post("/compose", function(req, res) {
+var today = new Date();
+  const post = new BlogPost({
+    author: req.body.authorName,
+    title: req.body.newTitle,
+    content: req.body.newPost
+  });
+  post.save(function(err) {
+    if (!err) {
+      res.redirect("/blog");
+    }
+  });
+});
+
+
+app.get("/posts/:postid", function(req, res) {
+  const postReq = _.lowerCase(req.params.postName);
+  const requestedPostid = req.params.postid;
+
+
+  BlogPost.findOne({
+    _id: requestedPostid
+  }, function(err, post) {
+    res.render("post", {
+      title: post.title,
+      author: post.author,
+      content: post.content,
+      date: post.date
+    });
+  });
+});
+
+app.get("/welcomePosts/:postid", function(req, res) {
+  const postReq = _.lowerCase(req.params.postName);
+  const requestedPostid = req.params.postid;
+
+
+  BlogPost.findOne({
+    _id: requestedPostid
+  }, function(err, welcomePost) {
+    res.render("welcomePost", {
+      title: welcomePost.title,
+      author: welcomePost.author,
+      content: welcomePost.content,
+      date: welcomePost.date
+    });
+  });
+});
+
+
+
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: ["profile"] })

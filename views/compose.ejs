@@ -5,10 +5,10 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Tech Aware Blog</title>
+  <title>Tech Aware</title>
   <meta content="" name="descriptison">
   <meta content="" name="keywords">
-
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <!-- Favicons -->
   <link href="start/img/TA.png" rel="icon">
   <link href="start/img/TA.png" rel="TA">
@@ -27,6 +27,15 @@
   <!-- Template Main CSS File -->
   <link href="end/css/style.css" rel="stylesheet">
 
+  <style>
+    #footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+
+    }
+  </style>
 </head>
 
 <body>
@@ -46,27 +55,34 @@
     </div>
   </header><!-- End Header -->
 
+  <br>
+  <br>
+  <section id="contact">
+    <div class="container">
 
-  <% posts.forEach(function(post){ %>
-  <br><br><br>
-
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-12">
-        <div class="card border-primary">
-          <div class="card-body">
-            <h1 class="card-title"><%= post.title %></h1>
-            <p>By <strong><%= post.author %></strong></p>
-            <p> <%= post.date %> </p>
-            <p class="card-text"><%= post.content.substring(0, 100) + "... " %></p>
-            <a href="/posts/<%= post._id%>" class="btn btn-primary">Read More</a>
-          </div>
+      <div class="col-lg-12 d-flex align-items-stretch" data-aos="fade-left">
+        <div class="row">
+          <form action="/compose" method="post">
+            <h2>Compose</h2>
+            <div class="form-group">
+              <label>Title</label>
+              <input type="text" name="newTitle" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label>Author</label>
+              <input type="text" name="authorName" class="form-control" autocomplete="off">
+            </div>
+            <div class="form-group">
+              <label>Post</label><br>
+              <textarea name="newPost" rows="7" cols="155" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Publish</button>
+          </form>
         </div>
       </div>
     </div>
-  </div>
-
-  <% }); %>
+  </section>
+  <br><br>
 
 
 
@@ -83,8 +99,7 @@
     </div>
   </footer><!-- End Footer -->
 
-  <!-- <a href="#" class="newCompose"><i class="bx bxs-up-arrow-alt"></i></a> -->
-<a class="btn btn-primary btn-lg newCompose" href="/compose" role="button" ><i class="fas fa-pen"> New Blog</i></a>
+  <a href="#" class="back-to-top"><i class="bx bxs-up-arrow-alt"></i></a>
 
   <!-- Vendor JS Files -->
   <script src="end/vendor/aos/aos.js"></script>
