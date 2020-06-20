@@ -80,6 +80,12 @@ app.get("/", forwardAuthenticated, function(req, res) {
   res.render("welcome");
 });
 
+//404 Page
+app.get("/page404", function(req, res) {
+  res.render("404");
+});
+
+
 // Dashboard
 app.get('/dashboard', ensureAuthenticated, function(req, res) {
   res.render('dashboard', {
