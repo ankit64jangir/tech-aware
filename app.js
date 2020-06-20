@@ -17,19 +17,22 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Express body parser
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({
+  extended: true
+}));
 
 
 
-app.get("/", function(req, res){
+app.get("/", function(req, res) {
   res.render("welcome");
 });
 
-
+// Login Page
+app.get('/login', (req, res) => res.render('login'));
 
 
 let port = process.env.PORT;
-if (port == null || port =="") {
+if (port == null || port == "") {
   port = 3000;
 }
 
