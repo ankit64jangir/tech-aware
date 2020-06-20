@@ -8,6 +8,19 @@ const app = express();
 app.use(express.static(__dirname + '/public'));
 
 
+// DB Config
+const db = require('./config/keys').mongoURI;
+
+// Connect to MongoDB
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true, useUnifiedTopology: true }
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
+
+
 
 // EJS
 app.set('view engine', 'ejs');
